@@ -1,0 +1,51 @@
+#game{
+    width: 760px;
+    height: 760px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    background-color: #73e029;
+}
+#game>img{display: none}
+canvas{
+    position: absolute;
+    right: 0;
+    left: 0;
+}
+#menu{
+    width: 200px;
+    height: 100px;
+    background-color: rgba(0,211,225,0.5);
+    border-radius: 20px;
+    position: absolute;
+    bottom: 10px;
+    right: -180px;
+    box-shadow: aliceblue 0 0 10px;
+    -webkit-transition: all 1s ; /*mở dần ra trong 2s, áp dụng cho web phía dưới */
+    -moz-transition: all 1s ; /* chrome */
+    -ms-transition: all 1s ; /*ex*/
+    -o-transition: all 1s ;/*Opera*/
+    transition: all 1s ; /*vs cái khác*/
+}
+#menu:hover{
+    width: 380px;
+}
+#menu>input{
+    margin-top: 20px;
+    margin-left: 65px;
+    width: 150px;
+}
+#text{
+    width: 27px;
+    height: 100%;
+    color: white;
+    position: absolute;
+    line-height: 50px;
+}
+#button{
+    margin-top: 10px;
+    margin-left: 45px;
+}
+#button>button{
+    color: #3684be;
+}
