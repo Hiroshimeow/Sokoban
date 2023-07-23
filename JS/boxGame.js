@@ -37,9 +37,14 @@ window.onload = function () {
   let changeY = 0;
   let timeOut = true;
   let complete = 0;
+  let gameFrame = 0
+  let gameSpeed = 6
+
+
   setItem();
 
   setInterval(function () {
+    gameFrame++
     context2.clearRect(0, 0, can2.width, can2.height);
     drawMap();
     drawItem();
@@ -50,7 +55,7 @@ window.onload = function () {
     let block = new Image();
     let ball = new Image();
     block.src = "assets/123.png";
-    ball.src = "assets/yelloball.png";
+    // ball.src = "assets/yelloball.png";
     for (let i = 0; i < levels[level].length; i++) {
       for (let j = 0; j < levels[level][i].length; j++) {
         context1.beginPath();
@@ -58,13 +63,12 @@ window.onload = function () {
       }
     }
   }
-//   console.log(levels[0][0].length);
+  //   console.log(levels[0][0].length);
 
   function setItem() {
     for (let i = 0; i < levels[level].length; i++) {
       nowLevel[i] = [];
       for (let j = 0; j < levels[level][i].length; j++) {
-        console.log(levels[level][i][j]);
         nowLevel[i][j] = levels[level][i][j];
       }
     }
@@ -88,7 +92,7 @@ window.onload = function () {
         };
         block.pic.src = "assets/123.png";
         blocks.push(block);
-        
+
         if (nowLevel[i][j] == 1) {
           newWall = {
             x: i * 35,
@@ -99,27 +103,36 @@ window.onload = function () {
           };
           newWall.pic.src = "assets/wall.png";
           walls.push(newWall);
+          // console.log(walls)
         }
+
         if (nowLevel[i][j] == 3) {
           aBox = {
             x: i * 35,
             y: j * 35,
             pic: new Image(),
+            waterBox: new Image(),
             realX: i,
             realY: j,
           };
-          aBox.pic.src = "assets/box.png";
+          aBox.pic.src = "assets/ice.png";
+          aBox.waterBox.src = "assets/Ball/ball.png";
           boxs.push(aBox);
         }
+
         if (nowLevel[i][j] == 2) {
           ball = {
             x: i * 35,
             y: j * 35,
             pic: new Image(),
+            fire: new Image(),
           };
-          ball.pic.src = "assets/yelloball.png";
+          
+          // ball.pic.src = "assets/yelloball.png";
+          ball.fire.src = "assets/Fire/fire.png";
           balls.push(ball);
         }
+
         if (nowLevel[i][j] == 4) {
           me = {
             x: i * 35,
@@ -130,7 +143,8 @@ window.onload = function () {
             realX: i,
             realY: j,
           };
-          me.role.src = "assets/me.png";
+          // me.role.src = "assets/me.png";
+          me.role.src = "assets/girl.png";
         }
       }
     }
@@ -141,10 +155,27 @@ window.onload = function () {
       context1.beginPath();
       context1.drawImage(blocks[i].pic, blocks[i].x, blocks[i].y, 35, 35);
     }
+
+    let position = (Math.floor(gameFrame/gameSpeed)%6)
     while (balls[i]) {
       if (balls[i].y / 35 == x) {
         context2.beginPath();
-        context2.drawImage(balls[i].pic, balls[i].x, balls[i].y);
+
+        // context2.drawImage(balls[i].pic, balls[i].x + 3, balls[i].y);
+      for (j = 0; j <6; j++ ){
+          context2.drawImage(
+          ball.fire,
+          position*128, //x của ảnh nơi bắt đầu vẽ
+          0, //y của ảnh 
+          128, //kích thước nhân vật trong ảnh
+          128, //kích thước y
+          balls[i].x - 18,
+          balls[i].y - 30,
+          70,
+          60
+        );
+
+      }  
       }
       i++;
     }
@@ -160,47 +191,77 @@ window.onload = function () {
     while (boxs[i]) {
       if (boxs[i].realY == x) {
         context2.beginPath();
-        context2.drawImage(boxs[i].pic, boxs[i].x, boxs[i].y - 10); 
+        context2.drawImage(boxs[i].pic, boxs[i].x, boxs[i].y - 10);
+        
+      //   for (j = 0; j <4; j++ ){
+      //     context2.drawImage(
+      //     aBox.waterBox,
+      //     Math.floor(gameFrame/gameSpeed)%4*182, //x của ảnh nơi bắt đầu vẽ
+      //     226*1, //y của ảnh 
+      //     150, //kích thước nhân vật trong ảnh
+      //     150, //kích thước y
+      //     boxs[i].x - 11, 
+      //     boxs[i].y - 14,
+      //     50,
+      //     50
+      //   );
+      // }
       }
       i++;
     }
-    i = 0;
+
+    // i = 0;
     if (me.realY == x) {
+      // context2.beginPath();
+      // context2.drawImage(
+      //   //drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+      //   me.role,
+      //   me.walkX, //sx
+      //   me.walkY, //sy
+      //   100, //sWidth
+      //   100, //sHeight
+      //   me.x - 18, //dx
+      //   me.y - 55, //dy
+      //   70, //dWidth
+      //   80 //Height
+
       context2.beginPath();
       context2.drawImage(
+        //drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
         me.role,
-        me.walkX,
-        me.walkY,
-        100,
-        100,
-        me.x - 18,
-        me.y - 65,
-        70,
-        90
-      ); 
+        me.walkX, //sx
+        me.walkY, //sy
+        64, //sWidth
+        128, //sHeight
+        me.x - 4, //dx
+        me.y - 50, //dy
+        49, //dWidth
+        100 //Height
+      );
     }
   }
   function drawItem() {
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < nowLevel.length; i++) {
       drawLine(i);
     }
   }
-  document.onkeydown = function () {
+  
+  document.onkeydown = function (event) {
     if (time == 0) {
       switch (event.keyCode) {
-        case 37:
+        case 65: //a
           changeX = -1;
-          me.walkY = 100;
+          me.walkY = 128;
           break;
-        case 38:
+        case 87: //w
           changeY = -1;
-          me.walkY = 300;
+          me.walkY = 384;
           break;
-        case 39:
-          changeX = 1;
-          me.walkY = 200;
+        case 68:
+          changeX = 1; //d
+          me.walkY = 256;
           break;
-        case 40:
+        case 83: //s
           changeY = 1;
           me.walkY = 0;
           break;
@@ -208,54 +269,71 @@ window.onload = function () {
     }
   };
 
+//key and logic for box move
   function key() {
     if (changeX != 0 || changeY != 0) {
       if (
-        nowLevel[me.realX + changeX][me.realY + changeY] == 0 ||
+        nowLevel[me.realX + changeX][me.realY + changeY] == 0 || //fire or none
         nowLevel[me.realX + changeX][me.realY + changeY] == 2
       ) {
         me.y += 5 * changeY;
         me.x += 5 * changeX;
-      } else if (nowLevel[me.realX + changeX][me.realY + changeY] == 3) {
+      } else if (nowLevel[me.realX + changeX][me.realY + changeY] == 3) {//box
         if (
           nowLevel[me.realX + 2 * changeX][me.realY + 2 * changeY] == 0 ||
           nowLevel[me.realX + 2 * changeX][me.realY + 2 * changeY] == 2
         ) {
-          me.y += 5 * changeY;
+          // console.log(me.realX);
+          
           me.x += 5 * changeX;
+          me.y += 5 * changeY;
           for (let i = 0; i < boxs.length; i++) {
             if (
               boxs[i].realX == me.realX + changeX &&
               boxs[i].realY == me.realY + changeY
             ) {
               console.log("changeBox");
-              boxs[i].y += 5 * changeY;
               boxs[i].x += 5 * changeX;
+              boxs[i].y += 5 * changeY;
             }
           }
         }
       }
       time += 5;
       if (time >= 7) {
-        me.walkX = 100;
+        me.walkX = 64; //100
       }
-      if (time >= 14) {
-        me.walkX = 200;
+      if (time >= 10) {
+        me.walkX = 128;
+      }
+      if (time >= 13) {
+        me.walkX = 192;
+      }
+      if (time >= 16) {
+        me.walkX = 256;
+      }
+      if (time >= 19) {
+        me.walkX = 320;
       }
       if (time >= 21) {
-        me.walkX = 300;
+        me.walkX = 384;
+      }
+      if (time >= 24) {
+        me.walkX = 448;
       }
       if (time >= 35) {
-        me.walkX = 0;
+        me.walkX = 320
+
         time = 0;
         if (
-          nowLevel[me.realX + changeX][me.realY + changeY] != 1 &&
-          nowLevel[me.realX + changeX][me.realY + changeY] != 3
+          nowLevel[me.realX + changeX][me.realY + changeY] != 1 
+          && nowLevel[me.realX + changeX][me.realY + changeY] != 3
         ) {
           nowLevel[me.realX][me.realY] = 0;
           nowLevel[me.realX + changeX][me.realY + changeY] = 4;
-          me.realY += changeY;
           me.realX += changeX;
+          me.realY += changeY;
+          
         } else if (nowLevel[me.realX + changeX][me.realY + changeY] == 3) {
           if (
             nowLevel[me.realX + 2 * changeX][me.realY + 2 * changeY] == 0 ||
@@ -302,19 +380,11 @@ window.onload = function () {
     context1.fillStyle = "rgba(255,255,255,1)";
     context1.font = "bold 30px cursive";
     let level2 = level + 1;
-    context2.fillText("Level:" + level2, 10, 20);
+    context2.fillText("Level:" + level2, 20, 35);
   }
   document.getElementById("jump").onclick = function () {
-    if (
-      document.getElementById("qua").value > 0 &&
-      document.getElementById("qua").value < 100
-    ) {
-      level = document.getElementById("qua").value;
-      level--;
-      setItem();
-    } else {
-      document.getElementById("qua").value = "num:from 0 to 99";
-    }
+    console.log('jump click');
+    
   };
   document.getElementById("replay").onclick = function () {
     setItem();

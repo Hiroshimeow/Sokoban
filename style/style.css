@@ -1,3 +1,10 @@
+#animation img {
+    display: none;
+}
+#animation img:first-child {
+    display: block;
+}
+
 #game{
     width: 760px;
     height: 760px;
