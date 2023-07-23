@@ -1,3 +1,10 @@
+li {
+    font-size: 24px; /* Thay đổi cỡ chữ tùy ý */
+}
+p3 {
+    font-size: 20px; /* Thay đổi cỡ chữ tùy ý */
+}
+
 #game{
     width: 560px;
     height: 560px;
