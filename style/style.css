@@ -1,8 +1,11 @@
 li {
-    font-size: 24px; /* Thay đổi cỡ chữ tùy ý */
+    font-size: 24px;
 }
 p3 {
-    font-size: 20px; /* Thay đổi cỡ chữ tùy ý */
+    font-size: 20px;
+}
+p {
+    font-size: 17px; 
 }
 
 #game{
