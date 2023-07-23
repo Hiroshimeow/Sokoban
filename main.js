@@ -21,6 +21,7 @@ class BoxGame {
 }
 
 window.onload = function () {
+  const backgroundMusic = document.getElementById("background-music");
   bg = new BoxGame();
   let nuclear = new Image();
   nuclear.src = "assets/nuclear.png";
@@ -419,28 +420,31 @@ window.onload = function () {
           boxs[j].y - 75,
           150,
           150
-        );
+        ); 
       } 
-      if (animEnd > 80){
+      if (animEnd > 100){
         level++;
         setItem();
         animEnd = 0
         gameEnd = false
         resetXAnim = 0
       }
-      // gameEnd = false
     }
-
-
 
     context1.fillStyle = "rgba(255,255,255,1)";
     context1.font = "bold 30px cursive";
     let level2 = level + 1;
     context2.fillText("Level:" + level2, 20, 35);
+
+    if (gameFrame>50){
+      backgroundMusic.play(); 
+    }
   }
+
   document.getElementById("jump").onclick = function () {
     console.log("jump click");
-  };
+    backgroundMusic.pause();
+  }; 
   document.getElementById("replay").onclick = function () {
     setItem();
   };
