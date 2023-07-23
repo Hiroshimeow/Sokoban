@@ -16,11 +16,14 @@ class BoxGame {
     this.changeY = 0;
     this.timeOut = true;
     this.complete = 0;
+    this.gameEnd = false;
   }
 }
 
 window.onload = function () {
   bg = new BoxGame();
+  let nuclear = new Image();
+  nuclear.src = "assets/nuclear.png";
   let can1 = document.getElementById("canvas1");
   let can2 = document.getElementById("canvas2");
   let context1 = can1.getContext("2d");
@@ -37,19 +40,21 @@ window.onload = function () {
   let changeY = 0;
   let timeOut = true;
   let complete = 0;
-  let gameFrame = 0
-  let gameSpeed = 6
-
+  let gameFrame = 0;
+  let gameSpeed = 6;
+  let gameEnd = false;
+  let animEnd = 0
 
   setItem();
 
   setInterval(function () {
-    gameFrame++
+    gameFrame++;
     context2.clearRect(0, 0, can2.width, can2.height);
     drawMap();
     drawItem();
     key();
     win();
+    console.log(gameEnd);
   }, 20);
   function drawMap() {
     let block = new Image();
@@ -66,12 +71,14 @@ window.onload = function () {
   //   console.log(levels[0][0].length);
 
   function setItem() {
+    
     for (let i = 0; i < levels[level].length; i++) {
       nowLevel[i] = [];
       for (let j = 0; j < levels[level][i].length; j++) {
         nowLevel[i][j] = levels[level][i][j];
       }
     }
+    
     boxs = [];
     balls = [];
     walls = [];
@@ -124,11 +131,9 @@ window.onload = function () {
           ball = {
             x: i * 35,
             y: j * 35,
-            pic: new Image(),
             fire: new Image(),
           };
-          
-          // ball.pic.src = "assets/yelloball.png";
+
           ball.fire.src = "assets/Fire/fire.png";
           balls.push(ball);
         }
@@ -149,37 +154,41 @@ window.onload = function () {
       }
     }
   }
-  
-  function drawLine(x) {
+ 
+  function drawLine(x) { 
+    
     let i = 0;
-    while (block[i]) {
+    while (block[i] && gameEnd === true) {
       context1.beginPath();
       context1.drawImage(blocks[i].pic, blocks[i].x, blocks[i].y, 35, 35);
     }
 
-    let position = (Math.floor(gameFrame/gameSpeed)%6)
-    while (balls[i]) {
-      if (balls[i].y / 35 == x) {
-        context2.beginPath();
+    let position = Math.floor(gameFrame / gameSpeed) % 6;
 
-        // context2.drawImage(balls[i].pic, balls[i].x + 3, balls[i].y);
-      for (j = 0; j <6; j++ ){
-          context2.drawImage(
-          ball.fire,
-          position*128, //x của ảnh nơi bắt đầu vẽ
-          0, //y của ảnh 
-          128, //kích thước nhân vật trong ảnh
-          128, //kích thước y
-          balls[i].x - 18,
-          balls[i].y - 30,
-          70,
-          60
-        );
-
-      }  
+    if (gameEnd === false){
+      while (balls[i]) {
+        if (balls[i].y / 35 == x) {
+          context2.beginPath();
+  
+          // context2.drawImage(balls[i].pic, balls[i].x + 3, balls[i].y);
+          for (j = 0; j < 6; j++) {
+            context2.drawImage(
+              ball.fire,
+              position * 128, //x của ảnh nơi bắt đầu vẽ
+              0, //y của ảnh
+              128, //kích thước nhân vật trong ảnh
+              128, //kích thước y
+              balls[i].x - 18,
+              balls[i].y - 30,
+              70,
+              60
+            );
+          }
+        }
+        i++;
       }
-      i++;
     }
+
     i = 0;
     while (walls[i]) {
       if (walls[i].realY == x) {
@@ -189,24 +198,36 @@ window.onload = function () {
       i++;
     }
     i = 0;
-    while (boxs[i]) {
+
+    // console.log(balls[0].x/35,balls[0].y/35);
+    // console.log(boxs[0].x/35,boxs[0].y/35);
+    // console.log(boxs[0].y/35);
+    
+    while (boxs[i] && gameEnd === false) {
+      bl = boxs.length;
       if (boxs[i].realY == x) {
-        context2.beginPath();
-        context2.drawImage(boxs[i].pic, boxs[i].x, boxs[i].y - 10);
-        
-      //   for (j = 0; j <4; j++ ){
-      //     context2.drawImage(
-      //     aBox.waterBox,
-      //     Math.floor(gameFrame/gameSpeed)%4*182, //x của ảnh nơi bắt đầu vẽ
-      //     226*1, //y của ảnh 
-      //     150, //kích thước nhân vật trong ảnh
-      //     150, //kích thước y
-      //     boxs[i].x - 11, 
-      //     boxs[i].y - 14,
-      //     50,
-      //     50
-      //   );
-      // }
+        for (let g = 0; g < boxs.length; g++) {
+          if ((boxs[i].x == balls[g].x) & (boxs[i].y == balls[g].y)) {
+            for (j = 0; j < 4; j++) {
+              context2.beginPath();
+              context2.drawImage(
+                aBox.waterBox,
+                (Math.floor(gameFrame / gameSpeed) % 4) * 182, //x của ảnh nơi bắt đầu vẽ
+                226 * 1, //y của ảnh
+                150, //kích thước nhân vật trong ảnh
+                150, //kích thước y
+                boxs[i].x - 19,
+                boxs[i].y - 19,
+                65,
+                65
+              );
+            }
+            break
+          } else {
+            context2.beginPath();
+            context2.drawImage(boxs[i].pic, boxs[i].x, boxs[i].y - 10);
+          }
+        }
       }
       i++;
     }
@@ -215,7 +236,6 @@ window.onload = function () {
     if (me.realY == x) {
       // context2.beginPath();
       // context2.drawImage(
-      //   //drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
       //   me.role,
       //   me.walkX, //sx
       //   me.walkY, //sy
@@ -246,7 +266,7 @@ window.onload = function () {
       drawLine(i);
     }
   }
-  
+
   document.onkeydown = function (event) {
     if (time == 0) {
       switch (event.keyCode) {
@@ -270,7 +290,7 @@ window.onload = function () {
     }
   };
 
-//key and logic for box move
+  //key and logic for box move
   function key() {
     if (changeX != 0 || changeY != 0) {
       if (
@@ -279,13 +299,14 @@ window.onload = function () {
       ) {
         me.y += 5 * changeY;
         me.x += 5 * changeX;
-      } else if (nowLevel[me.realX + changeX][me.realY + changeY] == 3) {//box
+      } else if (nowLevel[me.realX + changeX][me.realY + changeY] == 3) {
+        //box
         if (
           nowLevel[me.realX + 2 * changeX][me.realY + 2 * changeY] == 0 ||
           nowLevel[me.realX + 2 * changeX][me.realY + 2 * changeY] == 2
         ) {
           // console.log(me.realX);
-          
+
           me.x += 5 * changeX;
           me.y += 5 * changeY;
           for (let i = 0; i < boxs.length; i++) {
@@ -293,7 +314,6 @@ window.onload = function () {
               boxs[i].realX == me.realX + changeX &&
               boxs[i].realY == me.realY + changeY
             ) {
-              console.log("changeBox");
               boxs[i].x += 5 * changeX;
               boxs[i].y += 5 * changeY;
             }
@@ -323,18 +343,17 @@ window.onload = function () {
         me.walkX = 448;
       }
       if (time >= 35) {
-        me.walkX = 320
+        me.walkX = 320;
 
         time = 0;
         if (
-          nowLevel[me.realX + changeX][me.realY + changeY] != 1 
-          && nowLevel[me.realX + changeX][me.realY + changeY] != 3
+          nowLevel[me.realX + changeX][me.realY + changeY] != 1 &&
+          nowLevel[me.realX + changeX][me.realY + changeY] != 3
         ) {
           nowLevel[me.realX][me.realY] = 0;
           nowLevel[me.realX + changeX][me.realY + changeY] = 4;
           me.realX += changeX;
           me.realY += changeY;
-
         } else if (nowLevel[me.realX + changeX][me.realY + changeY] == 3) {
           if (
             nowLevel[me.realX + 2 * changeX][me.realY + 2 * changeY] == 0 ||
@@ -361,8 +380,12 @@ window.onload = function () {
         timeOut = true;
       }
     }
+  
   }
+  
+  
   function win() {
+    let resetXAnim
     complete = 0;
     for (let i = 0; i < balls.length; i++) {
       for (let j = 0; j < boxs.length; j++) {
@@ -375,20 +398,50 @@ window.onload = function () {
       }
     }
     if (complete == balls.length) {
-      level++;
-      setItem();
+      gameEnd = true
+      // console.log(gameEnd);
+      
     }
+    if (gameEnd === true){
+      animEnd++
+
+
+      for (j = 0; j < boxs.length; j++) {
+        context2.beginPath();
+        resetXAnim = Math.floor(gameFrame / 5) % 25
+        context2.drawImage(
+          nuclear,
+          (resetXAnim % 25) * 256,
+          0,
+          256,
+          256,
+          boxs[j].x - 55,
+          boxs[j].y - 75,
+          150,
+          150
+        );
+      } 
+      if (animEnd > 80){
+        level++;
+        setItem();
+        animEnd = 0
+        gameEnd = false
+        resetXAnim = 0
+      }
+      // gameEnd = false
+    }
+
+
+
     context1.fillStyle = "rgba(255,255,255,1)";
     context1.font = "bold 30px cursive";
     let level2 = level + 1;
     context2.fillText("Level:" + level2, 20, 35);
   }
   document.getElementById("jump").onclick = function () {
-    console.log('jump click');
-    
+    console.log("jump click");
   };
   document.getElementById("replay").onclick = function () {
     setItem();
-    
   };
 };
