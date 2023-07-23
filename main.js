@@ -149,6 +149,7 @@ window.onload = function () {
       }
     }
   }
+  
   function drawLine(x) {
     let i = 0;
     while (block[i]) {
@@ -333,7 +334,7 @@ window.onload = function () {
           nowLevel[me.realX + changeX][me.realY + changeY] = 4;
           me.realX += changeX;
           me.realY += changeY;
-          
+
         } else if (nowLevel[me.realX + changeX][me.realY + changeY] == 3) {
           if (
             nowLevel[me.realX + 2 * changeX][me.realY + 2 * changeY] == 0 ||
@@ -388,5 +389,6 @@ window.onload = function () {
   };
   document.getElementById("replay").onclick = function () {
     setItem();
+    
   };
 };

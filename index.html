@@ -3,13 +3,11 @@
   <head lang="en">
     <meta charset="UTF-8" />
     <title>タイトル</title>
-    <style src="style/style.js"></style>
+    <link rel = 'stylesheet' href="style/style.css">
     <script src="JS/mapdata100.js"></script>
-    <script src="JS/boxGame.js"></script>
+    <script src="main.js"></script>
   </head>
-
   <body>
-    
     <h1>SOKOBAN!</h1>
     作者: 3班
     <ul>
@@ -18,17 +16,25 @@
         <li>2220070 川本 優汰
         <li>2220133 張 晟涵
             
-    <br />
-    <br />
-    <div id="button">
-      <button id="jump">Jump off</button>
-      <button id="replay">Replay</button>
-    </div>
-    <br />
-    <div id="game">
-      <canvas id="canvas1" width="560px" height="560px"></canvas>
-      <canvas id="canvas2" width="560px" height="560px"></canvas>
+    <div class="coverText">
+      <span class="coverText-title">Sokoban (倉庫番) のルール</span>
+      <p>
+        <p>- 目標は、すべての氷箱を火の位置に押し込んで火を消すこと。        </p>
+        <p>- プレイヤーは氷箱を押して移動できる。</p>
+        <p>- 火の位置や壁は移動できない。</p>
+        <p>- 全ての氷箱を正しい位置に押し込むと、勝利。</p>
+  </div>
+  <div id="button" style="margin: .4em 0; position: relative;">
+    <button id="jump">Jump off</button>
+    <button id="replay">Replay</button>
+  </div>
+      <div id="game">
+        <canvas id="canvas1" width="960px" height="560px"></canvas>
+        <canvas id="canvas2" width="960px" height="560px"></canvas>
 
-    </div>
+        
+      </div>
+      
+
   </body>
 </html>

@@ -1,19 +1,13 @@
-#animation img {
-    display: none;
-}
-#animation img:first-child {
-    display: block;
-}
-
 #game{
-    width: 760px;
-    height: 760px;
-    margin: 0 auto;
+    width: 560px;
+    height: 560px;
+    /* margin: 0 auto; */
     position: relative;
     overflow: hidden;
-    background-color: #73e029;
+    background-color: #ffffff;
 }
 #game>img{display: none}
+
 canvas{
     position: absolute;
     right: 0;
@@ -45,7 +39,7 @@ canvas{
 #text{
     width: 27px;
     height: 100%;
-    color: white;
+    color: rgb(255, 255, 255);
     position: absolute;
     line-height: 50px;
 }
@@ -55,4 +49,42 @@ canvas{
 }
 #button>button{
     color: #3684be;
+}
+
+
+.coverText {
+    width: 522px;
+    position: relative   ;
+    margin: 2em 0;
+    padding: 0.5em 1em;
+    border: solid 3px #95ccff;
+    border-radius: 8px;
+}
+.coverText-title {
+    position: absolute;
+    display: inline-block;
+    top: -13px;
+    left: 10px;
+    padding: 0 3px;
+    line-height: 1;
+    font-size: 19px;
+    background: #FFF;
+    color: #95ccff;
+    font-weight: bold;
+}
+.coverText p {
+    margin: 0; 
+    padding: 0;
+}        
+
+#help {
+    float: right;
+    text-align: left;
+    width: 360px;
+}
+
+.container {
+    /* margin: 0 auto; */
+    text-align: center;
+    overflow: hidden;
 }
