@@ -1,15 +1,14 @@
-li {
-    font-size: 24px; 
-}
 p3 {
     font-size: 20px;
 }
 
-p {
+li {
     font-size: 18px;
 }
 
+
 #game{
+
     width: 560px;
     height: 560px;
     /* margin: 0 auto; */
@@ -65,7 +64,8 @@ canvas{
 
 .coverText {
     width: 522px;
-    position: relative   ;
+    position: relative;
+    font-size: 14px;
     margin: 2em 0;
     padding: 0.5em 1em;
     border: solid 3px #95ccff;
@@ -78,7 +78,7 @@ canvas{
     left: 10px;
     padding: 0 3px;
     line-height: 1;
-    font-size: 19px;
+    font-size: 16px;
     background: #FFF;
     color: #95ccff;
     font-weight: bold;
