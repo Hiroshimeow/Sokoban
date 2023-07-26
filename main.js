@@ -445,14 +445,16 @@ window.onload = function () {
   }
 
   document.getElementById("level+").onclick = function () {
-    if (level != 0) {
-      level -= 1;
+    if (level <99) {
+      level += 1;
       setItem();
     }
   };
   document.getElementById("level-").onclick = function () {
-    level += 1;
-    setItem();
+    if (level != 0) {
+      level -= 1;
+      setItem();
+    }
   };
   document.getElementById("replay").onclick = function () {
     setItem();
