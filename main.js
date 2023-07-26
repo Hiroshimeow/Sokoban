@@ -22,6 +22,8 @@ class BoxGame {
 
 window.onload = function () {
   const backgroundMusic = document.getElementById("background-music");
+  // isMusicPlaying = false;
+
   bg = new BoxGame();
   let nuclear = new Image();
   nuclear.src = "assets/nuclear.png";
@@ -55,7 +57,6 @@ window.onload = function () {
     drawItem();
     key();
     win();
-    console.log(gameEnd);
   }, 20);
   function drawMap() {
     let block = new Image();
@@ -268,28 +269,35 @@ window.onload = function () {
     }
   }
 
-  document.onkeydown = function (event) {
-    if (time == 0) {
-      switch (event.keyCode) {
-        case 65: //a
-          changeX = -1;
-          me.walkY = 128;
-          break;
-        case 87: //w
-          changeY = -1;
-          me.walkY = 384;
-          break;
-        case 68:
-          changeX = 1; //d
-          me.walkY = 256;
-          break;
-        case 83: //s
-          changeY = 1;
-          me.walkY = 0;
-          break;
-      }
+ // 2 つのキーを同時に受信するバグを防ぐ
+let keyPressed = false;
+document.onkeydown = function (event) {
+  if (time == 0 && !keyPressed) {
+    keyPressed = true;
+    switch (event.keyCode) {
+      case 65: //a
+        changeX = -1;
+        me.walkY = 128;
+        break;
+      case 87: //w
+        changeY = -1;
+        me.walkY = 384;
+        break;
+      case 68: //d
+        changeX = 1;
+        me.walkY = 256;
+        break;
+      case 83: //s
+        changeY = 1;
+        me.walkY = 0;
+        break;
     }
-  };
+  }
+};
+
+document.onkeyup = function (event) {
+  keyPressed = false;
+};
 
   //key and logic for box move
   function key() {
@@ -404,7 +412,7 @@ window.onload = function () {
       
     }
     if (gameEnd === true){
-      animEnd++
+      animEnd++ //make animetion when game end
 
 
       for (j = 0; j < boxs.length; j++) {
@@ -422,7 +430,7 @@ window.onload = function () {
           150
         ); 
       } 
-      if (animEnd > 100){
+      if (animEnd > 120){ //2s 待つ
         level++;
         setItem();
         animEnd = 0
@@ -437,15 +445,42 @@ window.onload = function () {
     context2.fillText("Level:" + level2, 20, 35);
 
     if (gameFrame>50){
-      backgroundMusic.play(); 
+      // backgroundMusic.play(); 
+      
     }
   }
 
-  document.getElementById("jump").onclick = function () {
-    console.log("jump click");
-    backgroundMusic.pause();
+  document.getElementById("level+").onclick = function () {
+    // console.log("jump click");
+    if (level!=0){
+      level-=1
+      setItem();
+    }
+    
+  }; 
+  document.getElementById("level-").onclick = function () {
+    // console.log("jump click");
+    level+=1
+    backgroundMusic.play();
+    setItem();
   }; 
   document.getElementById("replay").onclick = function () {
     setItem();
+    backgroundMusic.play();
+    backgroundMusic.play();
+    
+    
+  };
+  document.getElementById("playpause").onclick = function () {
+    // console.log('33');
+    // if (!isMusicPlaying) {
+    // backgroundMusic.pause();
+    //   backgroundMusic.play();
+    //   isMusicPlaying = false;
+    // } else {
+    //   backgroundMusic.play();
+    //   isMusicPlaying = true;
+    // }
+    backgroundMusic.play();
   };
 };
