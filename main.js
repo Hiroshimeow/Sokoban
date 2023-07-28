@@ -449,10 +449,18 @@ window.onload = function () {
       level += 1;
       setItem();
     }
+    else if (level == 99) {
+      level = 0;
+      setItem();
+    }
   };
-  document.getElementById("level-").onclick = function () {
-    if (level != 0) {
+  document.getElementById("level-").onclick = function () { // fix map ++
+    if (level > 0) {
       level -= 1;
+      setItem();
+    }
+    else if (level == 0) {
+      level = 99;
       setItem();
     }
   };
@@ -463,10 +471,15 @@ window.onload = function () {
     // console.log('33');
     if (isMusicPlaying) { //false
       backgroundMusic.pause();
-      // isMusicPlaying = false;
+      isMusicPlaying = false;
     } else {
       backgroundMusic.play();
-      // isMusicPlaying = true;
+      isMusicPlaying = true;
     }
   };
 };
+
+
+//https://www.cs.huji.ac.il/w~ai/projects/2012/SokobanWP/files/report.pdf
+// https://www.cs.huji.ac.il/w~ai/projects/2012/SokobanWP
+// page 12, 20 http://sokoban.dk/wp-content/uploads/2016/02/Timo-Virkkala-Solving-Sokoban-Masters-Thesis.pdf
