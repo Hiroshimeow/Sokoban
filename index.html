@@ -5,6 +5,7 @@
     <!-- 引入样式文件 styles.css -->
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="butten.css">
+    <link rel="stylesheet" href="butten_rule.css">
     <audio id="background-music" src="music/Run-Amok.mp3" loop></audio>
     <script src="JS/mapdata100.js"></script>
     <script src="main.js"></script>
@@ -249,21 +250,40 @@
             <li>2220074 NGUYENHAI DUONG</li>
             <li>2220133 張 晟涵</li>
         </ul>
-        <div id="button" style="position: absolute; top: 400px; right: 140px; display: flex; flex-direction: column;">
-            <div id="123" class="main" data-text="rule"  onclick="location.href='sample.html'" style="--c:#5dcd34"> 123</div>
+        <div id="button" style="position: absolute;  right: 140px; display: flex; flex-direction: column;">
             <div id="level-" class="main" data-text="level+" style="--c:#1e90ff">Level -</div>
             <div id="replay" class="main" data-text="replay" style="--c:#ff4757">Replay</div>
             <div id="level+" class="main" data-text="level-" style="--c:#ffa502">Level +</div>
-        </div>
-        <div>
-
-
+            <div id="btn3" class="main" data-text="Rule" style="--c:#00FA9A">Rule</div>
         
         </div>
+
+          <div id="mask" class="hidden"></div>
+          <section id="modal" class="hidden">
+            <p>● すべての氷箱を燃焼位置に移動させて、女の子が火を消すのを手伝ってください。</p>
+            <p>● 4つの W,A,S,D キーを使用しプレイヤーは氷箱を押して移動できます。</p>
+            <p>● 全ての氷箱を正しい位置に移動させると、勝利。</p>
+          </section>
+        
         <div id="game">
             <canvas id="canvas1" width="960px" height="560px"></canvas>
             <canvas id="canvas2" width="960px" height="560px"></canvas>
         </div>
     </div>
+    <script>
+        const btn3 = document.getElementById('btn3');
+        const mask = document.getElementById('mask');
+        const modal = document.getElementById('modal');
+
+        btn3.addEventListener('click', () => {
+        mask.classList.remove('hidden');
+        modal.classList.remove('hidden');
+        });
+
+        mask.addEventListener('click', () => {
+        mask.classList.add('hidden');
+        modal.classList.add('hidden');
+        });
+    </Script>
 </body>
 </html>
