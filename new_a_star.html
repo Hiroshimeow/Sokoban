@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <h1>A*アルゴリズムとNew A* アルゴリズム</h1>
+  <div class="coverText" >
+      
+    <p>-<strong>A*：</strong>SokobanゲームのためにA*アルゴリズムを適用する。しかし、実行不可能な解を避けるために、A*アルゴリズムを少し改良して New A*、計算時間を短縮する：</p>
+
+          
+    <p><strong>ステップ1：</strong>すべてのデッドロック（箱が動かせず、目的地に到達できない場所）を除去する。</p>
+  
+    <p><strong>ステップ2：</strong>各ボックスの移動に対して最小のf*を見つける。</p>
+    <img src="assets/a_star/2.png" alt="イメージの説明">
+  
+    <p><strong>ステップ3：</strong>f* = g* + h* = f(g, h)を計算する。ここで、g*は現在のノードへの開始地点からのコストであり、h*は現在のノードから目的地までの見積もりコストである。</p>
+  
+    <p><strong>ステップ4：</strong>各移動ごとに、g*とh*の値を計算し、h*が0の場合、New A*アルゴリズムは終了し、ゲームが終わった。</p>
+  
+    <p><strong>ステップ5：</strong>ステップ1を繰り返す。</p>
+    <p><strong> ‣以下は、A* アルゴリズムの使用方法の図：</strong></p>
+    <img src="assets/a_star/4.png" alt="イメージの説明">
+  </div>
+  <input type="button" onclick="history.back()" value="ゲームへ戻る">
+</body>
+</html>

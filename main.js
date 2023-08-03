@@ -22,7 +22,7 @@ class BoxGame {
 
 window.onload = function () {
   const backgroundMusic = document.getElementById("background-music");
-  isMusicPlaying = false;
+  // isMusicPlaying = false;
 
   bg = new BoxGame();
   let nuclear = new Image();
@@ -46,7 +46,7 @@ window.onload = function () {
   let gameFrame = 0;
   let gameSpeed = 6;
   let gameEnd = false;
-  let animEnd = 0;
+  let animEnd = 0
 
   setItem();
 
@@ -73,13 +73,14 @@ window.onload = function () {
   //   console.log(levels[0][0].length);
 
   function setItem() {
+    
     for (let i = 0; i < levels[level].length; i++) {
       nowLevel[i] = [];
       for (let j = 0; j < levels[level][i].length; j++) {
         nowLevel[i][j] = levels[level][i][j];
       }
     }
-
+    
     boxs = [];
     balls = [];
     walls = [];
@@ -155,8 +156,9 @@ window.onload = function () {
       }
     }
   }
-
-  function drawLine(x) {
+ 
+  function drawLine(x) { 
+    
     let i = 0;
     while (block[i] && gameEnd === true) {
       context1.beginPath();
@@ -165,11 +167,11 @@ window.onload = function () {
 
     let position = Math.floor(gameFrame / gameSpeed) % 6;
 
-    if (gameEnd === false) {
+    if (gameEnd === false){
       while (balls[i]) {
         if (balls[i].y / 35 == x) {
           context2.beginPath();
-
+  
           // context2.drawImage(balls[i].pic, balls[i].x + 3, balls[i].y);
           for (j = 0; j < 6; j++) {
             context2.drawImage(
@@ -202,7 +204,7 @@ window.onload = function () {
     // console.log(balls[0].x/35,balls[0].y/35);
     // console.log(boxs[0].x/35,boxs[0].y/35);
     // console.log(boxs[0].y/35);
-
+    
     while (boxs[i] && gameEnd === false) {
       bl = boxs.length;
       if (boxs[i].realY == x) {
@@ -222,7 +224,7 @@ window.onload = function () {
                 65
               );
             }
-            break;
+            break
           } else {
             context2.beginPath();
             context2.drawImage(boxs[i].pic, boxs[i].x, boxs[i].y - 10);
@@ -267,35 +269,35 @@ window.onload = function () {
     }
   }
 
-  // 2 つのキーを同時に受信するバグを防ぐ
-  let keyPressed = false;
-  document.onkeydown = function (event) {
-    if (time == 0 && !keyPressed) {
-      keyPressed = true;
-      switch (event.keyCode) {
-        case 65: //a
-          changeX = -1;
-          me.walkY = 128;
-          break;
-        case 87: //w
-          changeY = -1;
-          me.walkY = 384;
-          break;
-        case 68: //d
-          changeX = 1;
-          me.walkY = 256;
-          break;
-        case 83: //s
-          changeY = 1;
-          me.walkY = 0;
-          break;
-      }
+ // 2 つのキーを同時に受信するバグを防ぐ
+let keyPressed = false;
+document.onkeydown = function (event) {
+  if (time == 0 && !keyPressed) {
+    keyPressed = true;
+    switch (event.keyCode) {
+      case 65: //a
+        changeX = -1;
+        me.walkY = 128;
+        break;
+      case 87: //w
+        changeY = -1;
+        me.walkY = 384;
+        break;
+      case 68: //d
+        changeX = 1;
+        me.walkY = 256;
+        break;
+      case 83: //s
+        changeY = 1;
+        me.walkY = 0;
+        break;
     }
-  };
+  }
+};
 
-  document.onkeyup = function (event) {
-    keyPressed = false;
-  };
+document.onkeyup = function (event) {
+  keyPressed = false;
+};
 
   //key and logic for box move
   function key() {
@@ -387,10 +389,12 @@ window.onload = function () {
         timeOut = true;
       }
     }
+  
   }
-
+  
+  
   function win() {
-    let resetXAnim;
+    let resetXAnim
     complete = 0;
     for (let i = 0; i < balls.length; i++) {
       for (let j = 0; j < boxs.length; j++) {
@@ -403,15 +407,17 @@ window.onload = function () {
       }
     }
     if (complete == balls.length) {
-      gameEnd = true;
+      gameEnd = true
       // console.log(gameEnd);
+      
     }
-    if (gameEnd === true) {
-      animEnd++; //make animetion when game end
+    if (gameEnd === true){
+      animEnd++ //make animetion when game end
+
 
       for (j = 0; j < boxs.length; j++) {
         context2.beginPath();
-        resetXAnim = Math.floor(gameFrame / 5) % 25;
+        resetXAnim = Math.floor(gameFrame / 5) % 25
         context2.drawImage(
           nuclear,
           (resetXAnim % 25) * 256,
@@ -422,15 +428,14 @@ window.onload = function () {
           boxs[j].y - 75,
           150,
           150
-        );
-      }
-      if (animEnd > 120) {
-        //2s 待つ
+        ); 
+      } 
+      if (animEnd > 120){ //2s 待つ
         level++;
         setItem();
-        animEnd = 0;
-        gameEnd = false;
-        resetXAnim = 0;
+        animEnd = 0
+        gameEnd = false
+        resetXAnim = 0
       }
     }
 
@@ -439,47 +444,63 @@ window.onload = function () {
     let level2 = level + 1;
     context2.fillText("Level:" + level2, 20, 35);
 
-    if (gameFrame > 50) {
-      // backgroundMusic.play();
+    if (gameFrame>50){
+      // backgroundMusic.play(); 
+      
     }
   }
 
-  document.getElementById("level+").onclick = function () {
-    if (level <99) {
+  document.getElementById("level-").onclick = function () {
+
+    if (level <108) {
+
       level += 1;
+
       setItem();
+
     }
-    else if (level == 99) {
+
+    else if (level == 108) {
+
       level = 0;
+
       setItem();
+
     }
+
   };
-  document.getElementById("level-").onclick = function () { // fix map ++
+
+  document.getElementById("level+").onclick = function () { // fix map ++
+
     if (level > 0) {
+
       level -= 1;
+
       setItem();
+
     }
+
     else if (level == 0) {
-      level = 99;
+
+      level = 108;
+
       setItem();
+
     }
+
   };
   document.getElementById("replay").onclick = function () {
     setItem();
+    
+    
   };
-  document.getElementById("playpause").onclick = function () {
-    // console.log('33');
-    if (isMusicPlaying) { //false
-      backgroundMusic.pause();
-      isMusicPlaying = false;
-    } else {
+  let isOn = false;
+  document.getElementById("music").onclick = function () {
+    isOn = !isOn;
+    if (isOn) {
       backgroundMusic.play();
-      isMusicPlaying = true;
+    } else {
+      backgroundMusic.pause();
     }
+  }
   };
-};
-
-
-//https://www.cs.huji.ac.il/w~ai/projects/2012/SokobanWP/files/report.pdf
-// https://www.cs.huji.ac.il/w~ai/projects/2012/SokobanWP
-// page 12, 20 http://sokoban.dk/wp-content/uploads/2016/02/Timo-Virkkala-Solving-Sokoban-Masters-Thesis.pdf
